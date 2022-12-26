@@ -47,6 +47,7 @@
 		0B6D28432959EC2900C15079 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		0B6D2845295A1C1700C15079 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0B6D2847295A21C900C15079 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0B6D2849295A4B1F00C15079 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +90,7 @@
 				0B6D28432959EC2900C15079 /* Auth0.plist */,
 				0B5F276B2912F6090094AB00 /* icon.png */,
 				0B5F275D290C70690094AB00 /* Info.plist */,
+				0B6D2849295A4B1F00C15079 /* Config.xcconfig */,
 			);
 			path = RecipeApp;
 			sourceTree = "<group>";
@@ -260,6 +262,7 @@
 /* Begin XCBuildConfiguration section */
 		0B5F275E290C70690094AB00 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B6D2849295A4B1F00C15079 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -320,6 +323,7 @@
 		};
 		0B5F275F290C70690094AB00 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B6D2849295A4B1F00C15079 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -8,7 +8,6 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    let apikey="14dd3278bfce4867b103a17c66bf891e"
     
     @IBOutlet weak var randomTriviaLabel: UILabel!
     
@@ -16,10 +15,13 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var randomRecipeImage: UIImageView!
     
     
+    var apikey = ""
     
     override func viewDidLoad() {
-//        let imageTapGesture = UITapGestureRecognizer(target: self, action: Selector("profileTapped"))
-//        profileIcon.addGestureRecognizer(imageTapGesture)
+        
+        if let key = Bundle.main.infoDictionary? ["API_KEY"] as? String {
+            apikey = key
+        }
         
         fetchRandomTrivia()
         fetchRandomRecipe()
@@ -27,13 +29,10 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    func profileTapped(){
-        
-    }
     
     func fetchRandomTrivia(){
         let url = URL(string: "https://api.spoonacular.com/food/trivia/random?apiKey=\(apikey)")!
-        
+        print(apikey)
         URLSession.shared.fetchData(for: url) {(result: Result<Trivia, Error>) in
             switch result {
             case .success(let joke):

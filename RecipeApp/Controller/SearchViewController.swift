@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-
+    var apikey = ""
     @IBOutlet weak var searchbar: UISearchBar!
     
     let cuisines:[String] = ["African", "American", "Chinese", "French", "German", "Indian", "Italian", "Japanese", "Korean", "Mexican", "Middle Eastern", "Spanish", "Thai"]
@@ -18,6 +18,9 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let key = Bundle.main.infoDictionary? ["API_KEY"] as? String {
+            apikey = key
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -40,14 +43,16 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    //In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let url = URL(string: "https://api.spoonacular.com/food/trivia/random?apiKey=\(apikey)")!
+        
     }
-    */
+    
 
 }

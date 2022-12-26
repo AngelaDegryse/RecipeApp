@@ -1,0 +1,10 @@
+//
+//  Config.xcconfig
+//  RecipeApp
+//
+//  Created by Angela Degryse on 26/12/2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+API_KEY=14dd3278bfce4867b103a17c66bf891e
