@@ -8,9 +8,15 @@
 import Foundation
 
 struct RecipeResult:Decodable{
-    var recipes:[Recipe]
+    var offset: Int
+    var number: Int
+    var totalResults: Int
+    var results: [Recipe]
 }
 
+struct randomResult:Decodable{
+    var recipes:[Recipe]
+}
 struct Recipe:Decodable{
     var id:Int
     var title: String

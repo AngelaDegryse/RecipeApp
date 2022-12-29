@@ -25,14 +25,12 @@ class HomeViewController: UIViewController {
         
         fetchRandomTrivia()
         fetchRandomRecipe()
-        
         super.viewDidLoad()
-        
+    
     }
     
     func fetchRandomTrivia(){
         let url = URL(string: "https://api.spoonacular.com/food/trivia/random?apiKey=\(apikey)")!
-        print(apikey)
         URLSession.shared.fetchData(for: url) {(result: Result<Trivia, Error>) in
             switch result {
             case .success(let joke):
@@ -49,7 +47,7 @@ class HomeViewController: UIViewController {
     func fetchRandomRecipe(){
         let url = URL(string: "https://api.spoonacular.com/recipes/random?apiKey=\(apikey)")!
         
-        URLSession.shared.fetchData(for: url) {(result: Result<RecipeResult, Error>) in
+        URLSession.shared.fetchData(for: url) {(result: Result<randomResult, Error>) in
             switch result {
             case .success(let result):
                 let url = URL(string: result.recipes[0].image)!

@@ -9,9 +9,10 @@ import UIKit
 
 class SearchViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var apikey = ""
+    var filterKeyword = ""
     @IBOutlet weak var searchbar: UISearchBar!
     
-    let cuisines:[String] = ["African", "American", "Chinese", "French", "German", "Indian", "Italian", "Japanese", "Korean", "Mexican", "Middle Eastern", "Spanish", "Thai"]
+    let cuisines:[String] = ["African", "American", "Chinese", "French", "German", "Indian", "Italian", "Japanese", "Korean", "Mexican", "Spanish", "Thai", "Vietnamese"]
     
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -38,21 +39,33 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(cuisines[indexPath.row])
+        //print(cuisines[indexPath.row])
+        filterKeyword = cuisines[indexPath.row]
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+         let vc = storyboard.instantiateViewController(withIdentifier: "RecipeListViewController") as! RecipeListViewController
+         self.navigationController?.pushViewController(vc, animated: true)
+        vc.filterkeyword = filterKeyword
+        vc.apikey = apikey
     }
     
     
 
     
-    // MARK: - Navigation
-
-    //In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        let url = URL(string: "https://api.spoonacular.com/food/trivia/random?apiKey=\(apikey)")!
-        
-    }
+//    // MARK: - Navigation
+//
+//    //In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        // Get the new view controller using segue.destination.
+//        // Pass the selected object to the new view controller.
+//        if segue.destination is RecipeListViewController{
+//            let vc = segue.destination as? RecipeListViewController
+//            vc?.filterkeyword = filterKeyword
+//            print(filterKeyword)
+//        }
+//
+//        //let url = URL(string: "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&cuisine=")!
+//
+//    }
     
 
 }
