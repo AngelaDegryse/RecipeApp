@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B000359295DFF6C004EBB89 /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B000358295DFF6C004EBB89 /* RecipeDetailViewController.swift */; };
 		0B36823A2915A1E6004C42B9 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3682392915A1E6004C42B9 /* CollectionViewCell.swift */; };
 		0B36823C2915BBCD004C42B9 /* RecipeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36823B2915BBCD004C42B9 /* RecipeListViewController.swift */; };
 		0B5F2750290C70670094AB00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5F274F290C70670094AB00 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B000358295DFF6C004EBB89 /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
 		0B3682392915A1E6004C42B9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		0B36823B2915BBCD004C42B9 /* RecipeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewController.swift; sourceTree = "<group>"; };
 		0B5F274C290C70670094AB00 /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +108,7 @@
 				0B6D2845295A1C1700C15079 /* UserViewController.swift */,
 				0B5F2766290D6DD00094AB00 /* SearchViewController.swift */,
 				0B36823B2915BBCD004C42B9 /* RecipeListViewController.swift */,
+				0B000358295DFF6C004EBB89 /* RecipeDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 			files = (
 				0B36823C2915BBCD004C42B9 /* RecipeListViewController.swift in Sources */,
 				0B36823A2915A1E6004C42B9 /* CollectionViewCell.swift in Sources */,
+				0B000359295DFF6C004EBB89 /* RecipeDetailViewController.swift in Sources */,
 				0B5F2769290D6FAA0094AB00 /* HomeViewController.swift in Sources */,
 				0B6D2846295A1C1700C15079 /* UserViewController.swift in Sources */,
 				0B5F2754290C70670094AB00 /* LoginViewController.swift in Sources */,

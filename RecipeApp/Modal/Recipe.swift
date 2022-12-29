@@ -22,6 +22,7 @@ struct Recipe:Decodable{
     var title: String
     var image: String
     var readyInMinutes: Int?
+    var aggregateLikes: Int?
     var extendedIngredients:[Ingredient]?
     var analyzedInstructions: [Instruction]?
 }
@@ -29,7 +30,7 @@ struct Recipe:Decodable{
 struct Ingredient:Codable{
     var id:Int
     var name:String
-    var original:String?
+    var original:String
     var amount:Double
     var unit:String
 }

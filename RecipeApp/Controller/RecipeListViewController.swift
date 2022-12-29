@@ -10,21 +10,32 @@ import UIKit
 class RecipeListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var recipes = [Recipe]()
-    var filterkeyword = ""
+    var cuisine = ""
+    var searchterm = ""
     var apikey = ""
     @IBOutlet weak var filterKeywordLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterKeywordLabel.text = filterkeyword
         fetchRecipes()
+        
         collectionView.dataSource = self
         collectionView.delegate = self
     }
     
     func fetchRecipes(){
-        let url = URL(string: "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&cuisine=\(filterkeyword)&number=20")!
+        var urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&number=10"
+        if(cuisine.isEmpty){
+            urlString += "&query=\(searchterm)"
+            filterKeywordLabel.text = searchterm
+        }else{
+            urlString += "&cuisine=\(cuisine)"
+            filterKeywordLabel.text = cuisine
+        }
+        print(urlString)
+        let url = URL(string: urlString)!
+        
         URLSession.shared.fetchData(for: url) {(result: Result<RecipeResult, Error>) in
             switch result {
             case .success(let recipeResult):
@@ -44,12 +55,18 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCollectionCell", for: indexPath) as! RecipeCollectionViewCell
-            
             cell.configure(with: recipes[indexPath.row])
             
             return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "RecipeDetailViewController") as! RecipeDetailViewController
+         self.navigationController?.pushViewController(vc, animated: true)
+        vc.apikey = apikey
+        vc.recipeId = recipes[indexPath.row].id
     }
 
 
