@@ -10,7 +10,6 @@ import UIKit
 
 class RecipeCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var recipeNameLabel: UILabel!
     func configure(with recipe:Recipe){

@@ -21,7 +21,6 @@ class RecipeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchRecipeDetails()
-        // Do any additional setup after loading the view.
     }
     
     func fetchRecipeDetails(){
