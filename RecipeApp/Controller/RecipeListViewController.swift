@@ -13,6 +13,8 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
     var cuisine = ""
     var searchterm = ""
     var apikey = ""
+    var offset = 0
+    var totalResults = 0
     @IBOutlet weak var filterKeywordLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -25,7 +27,7 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func fetchRecipes(){
-        var urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&number=10"
+        var urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&number=10&offset=\(offset)"
         if(cuisine.isEmpty){
             urlString += "&query=\(searchterm)"
             filterKeywordLabel.text = searchterm
@@ -40,7 +42,8 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
             switch result {
             case .success(let recipeResult):
                 DispatchQueue.main.async { [self] in
-                    recipes = recipeResult.results
+                    recipes.append(contentsOf: recipeResult.results)
+                    totalResults = recipeResult.totalResults
                     self.collectionView.reloadData()
                 }
 
@@ -67,6 +70,14 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
          self.navigationController?.pushViewController(vc, animated: true)
         vc.apikey = apikey
         vc.recipeId = recipes[indexPath.row].id
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+        if (offset < totalResults && indexPath.row == recipes.count-1){
+            offset+=10;
+            fetchRecipes();
+        }
     }
 
 
