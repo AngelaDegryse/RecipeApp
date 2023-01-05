@@ -16,9 +16,10 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    private var accesstoken = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
 
@@ -28,8 +29,20 @@ class LoginViewController: UIViewController {
             .start { result in
                 switch result {
                 case .success(let credentials):
-                    loggedInUser = User.from(credentials.idToken)
+                    self.accesstoken = credentials.idToken
+                    loggedInUser = User.from(self.accesstoken)
                     print(loggedInUser.name)
+                    Auth0
+                       .authentication()
+                       .userInfo(withAccessToken: credentials.accessToken)
+                       .start { result in
+                           switch result {
+                           case .success(let user):
+                               print("Obtained user: \(user)")
+                           case .failure(let error):
+                               print("Failed with: \(error)")
+                           }
+                       }
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
 
@@ -38,8 +51,8 @@ class LoginViewController: UIViewController {
                     print("Failed with: \(error)")
                 }
             }
-
-
+        print("hello")
+        
     }
 }
 

@@ -13,7 +13,6 @@ struct User{
     let name: String
     let email: String
     let picture: String
-    let app_metadata: Metedata
 }
 struct Metedata{
     let username: String
@@ -26,8 +25,7 @@ extension User{
           id: "",
           name: "",
           email: "",
-          picture: "",
-          app_metadata: Metedata(username:"",hash:"")
+          picture: ""
         )
     }
     
@@ -37,10 +35,7 @@ extension User{
           let id = jwt.subject,
           let name = jwt.claim(name: "name").string,
           let email = jwt.claim(name: "email").string,
-          let picture = jwt.claim(name: "picture").string,
-          let username = jwt.claim(name: "app_metadata.username").string,
-          let hash = jwt.claim(name: "app_metadata.hash").string
-            
+          let picture = jwt.claim(name: "picture").string
         else {
           return .empty
         }
@@ -48,8 +43,7 @@ extension User{
               id: id,
               name: name,
               email: email,
-              picture: picture,
-              app_metadata: Metedata(username: username, hash: hash)
+              picture: picture
             )
           }
 }

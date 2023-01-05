@@ -11,11 +11,13 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var randomTriviaLabel: UILabel!
     
+    @IBOutlet weak var likesButton: UIButton!
     @IBOutlet weak var randomRecipeTitle: UILabel!
     @IBOutlet weak var randomRecipeImage: UIImageView!
     
     
     var apikey = ""
+    var randomRecipeId = 0
     
     override func viewDidLoad() {
         
@@ -59,7 +61,8 @@ class HomeViewController: UIViewController {
                             // Create Image and Update Image View
                             randomRecipeImage.image = UIImage(data: data)
                             randomRecipeTitle.text = result.recipes[0].title
-                            
+                            likesButton.setTitle(String(result.recipes[0].aggregateLikes ?? 0) , for: .normal)
+                            randomRecipeId = result.recipes[0].id
                         }
                     }
                     
@@ -70,12 +73,14 @@ class HomeViewController: UIViewController {
                 print(error)
             }
         }
-        randomRecipeImage.layer.shadowColor = UIColor.black.cgColor
-        randomRecipeImage.layer.shadowRadius = 3.0
-        randomRecipeImage.layer.shadowOpacity = 1.0
-        randomRecipeImage.layer.shadowOffset = CGSize(width: 4, height: 4)
-        randomRecipeImage.layer.masksToBounds = false
     }
     
+    @IBAction func recipeButtonPressed(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "RecipeDetailViewController") as! RecipeDetailViewController
+        vc.recipeId = randomRecipeId
+        vc.apikey = apikey
+        self.present(vc, animated: true, completion: nil)
+        print(randomRecipeId)
+    }
     
 }

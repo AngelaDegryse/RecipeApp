@@ -24,7 +24,6 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
             apikey = key
         }
         fetchShoppingList()
-        tableView.reloadData()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -52,27 +51,33 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func addToShoppingList(_ sender: Any) {
         let url = URL(string: "https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items?apiKey=\(apikey)&hash=\(passwordHash)")!
         
-        let jsonData = try? JSONEncoder().encode(addToListBody(item: textField.text!, parse: true))
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = jsonData
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            do {
-                if let error = error {
-                    print(error)
-                } else if let data = data {
-                    let item = try JSONDecoder().decode(Item.self, from: data)
-                    self.shoppingList.append(item)
-                } else {
-                    print("Unexpected error accured")
+        if(!textField.text!.isEmpty) {
+            let jsonData = try? JSONEncoder().encode(addToListBody(item: textField.text!, parse: true))
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                do {
+                    if let error = error {
+                        print(error)
+                    } else if let data = data {
+                        let item = try JSONDecoder().decode(Item.self, from: data)
+                        DispatchQueue.main.async {
+                            self.shoppingList.append(item)
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        print("Unexpected error accured")
+                    }
+                } catch {
+                    print("Error: Trying to convert JSON data to string")
+                    return
                 }
-            } catch {
-                print("Error: Trying to convert JSON data to string")
-                return
-            }
-        }.resume()
-        self.tableView.reloadData()
+            }.resume()
+        }
+        
         textField.text = ""
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,8 +97,9 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             tableView.beginUpdates()
+            deleteItemFromListWith(id: shoppingList[indexPath.row].id)
+            print("\(shoppingList[indexPath.row].id) - \(shoppingList[indexPath.row].name)")
             shoppingList.remove(at: indexPath.row)
-            deleteItemFromListWith(id: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }
@@ -101,7 +107,7 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
     
     func deleteItemFromListWith(id:Int){
         let url = URL(string: "https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items/\(id)?apiKey=\(apikey)&hash=\(passwordHash)")!
-        print("https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items/\(id)?apiKey=\(apikey)&hash=\(passwordHash)")
+   print("https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items/\(id)?apiKey=\(apikey)&hash=\(passwordHash)")
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         URLSession.shared.dataTask(with: request){ data, response, error in
@@ -111,20 +117,11 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
                     return
                 }
             } catch {
-                print("Error: Trying to convert JSON data to string")
+                print("Error: \(error)")
                 return
             }
         }.resume()
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }
