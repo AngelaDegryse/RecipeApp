@@ -28,7 +28,7 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
     
     func fetchRecipes(){
         var urlString = "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apikey)&number=10&offset=\(offset)"
-        if(cuisine.isEmpty){
+        if cuisine.isEmpty{
             urlString += "&query=\(searchterm)"
             filterKeywordLabel.text = searchterm
         }else{
@@ -73,7 +73,7 @@ class RecipeListViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        if (offset < totalResults && indexPath.row == recipes.count-1){
+        if offset < totalResults && indexPath.row == recipes.count-1{
             offset+=10;
             fetchRecipes();
         }

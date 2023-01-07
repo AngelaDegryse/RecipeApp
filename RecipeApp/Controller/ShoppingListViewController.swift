@@ -51,7 +51,7 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func addToShoppingList(_ sender: Any) {
         let url = URL(string: "https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items?apiKey=\(apikey)&hash=\(passwordHash)")!
         
-        if(!textField.text!.isEmpty) {
+        if !textField.text!.isEmpty {
             let jsonData = try? JSONEncoder().encode(addToListBody(item: textField.text!, parse: true))
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
@@ -98,7 +98,7 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
         if editingStyle == .delete{
             tableView.beginUpdates()
             deleteItemFromListWith(id: shoppingList[indexPath.row].id)
-            print("\(shoppingList[indexPath.row].id) - \(shoppingList[indexPath.row].name)")
+            print("\(shoppingList[indexPath.row].id) - \(shoppingList[indexPath.row-1].name)")
             shoppingList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
@@ -107,7 +107,6 @@ class ShoppingListViewController: UIViewController, UITableViewDataSource, UITab
     
     func deleteItemFromListWith(id:Int){
         let url = URL(string: "https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items/\(id)?apiKey=\(apikey)&hash=\(passwordHash)")!
-   print("https://api.spoonacular.com/mealplanner/\(username)/shopping-list/items/\(id)?apiKey=\(apikey)&hash=\(passwordHash)")
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         URLSession.shared.dataTask(with: request){ data, response, error in
